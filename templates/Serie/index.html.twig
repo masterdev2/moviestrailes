@@ -1,0 +1,107 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+<!-- Page content -->
+	<div class="page-content">
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Invoice archive -->
+			<div class="panel panel-white">
+				<div class="panel-heading">
+					<h6 class="panel-title">Invoice archive</h6>
+					<div class="heading-elements">
+						<ul class="icons-list">
+	                		<li><a data-action="collapse"></a></li>
+	                		<li><a data-action="reload"></a></li>
+	                		<li><a data-action="close"></a></li>
+	                	</ul>
+                	</div>
+				</div>
+
+				<table class="table table-lg invoice-archive">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Period</th>
+			                <th>Issued to</th>
+			                <th>Status</th>
+			                <th>Issue date</th>
+			                <th>Due date</th>
+			                <th>Amount</th>
+			                <th class="text-center">Actions</th>
+			            </tr>
+					</thead>
+					<tbody>
+						{% for serie in series %}
+							<tr>
+								<td>#{{serie.id}}</td>
+								<td>{{serie.year}}</td>
+				                <td>
+				                	<h6 class="no-margin">
+				                		<a href="#">{{serie.title}}</a>
+				                		<small class="display-block text-muted">Payment method: Skrill</small>
+			                		</h6>
+			                	</td>
+				                <td>
+				                	<select name="status" class="select" data-placeholder="Select status">
+				                		<option value="overdue">Overdue</option>
+				                		<option value="hold" selected="selected">On hold</option>
+				                		<option value="pending">Pending</option>
+				                		<option value="paid">Paid</option>
+				                		<option value="invalid">Invalid</option>
+				                		<option value="cancel">Canceled</option>
+				                	</select>
+			                	</td>
+				                <td>
+				                	April 18, 2015
+			                	</td>
+				                <td>
+				                	<span class="label label-success">Paid on Mar 16, 2015</span>
+			                	</td>
+				                <td>
+				                	<h6 class="no-margin text-bold">$17,890 <small class="display-block text-muted text-size-small">VAT $4,890</small></h6>
+				                </td>
+								<td class="text-center">
+									<ul class="icons-list">
+										<li><a href="#" data-toggle="modal" data-target="#invoice"><i class="icon-file-eye"></i></a></li>
+										<li class="dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-file-text2"></i> <span class="caret"></span></a>
+											<ul class="dropdown-menu dropdown-menu-right">
+												<li><a href="#"><i class="icon-file-download"></i> Download</a></li>
+												<li><a href="#"><i class="icon-printer"></i> Print</a></li>
+												<li class="divider"></li>
+												<li><a href="#"><i class="icon-file-plus"></i> Edit</a></li>
+												<li><a href="#"><i class="icon-cross2"></i> Remove</a></li>
+											</ul>
+										</li>
+									</ul>
+								</td>
+				            </tr>
+			            {% endfor %}
+		            </tbody>
+	            </table>
+			</div>
+			<!-- /invoice archive -->
+
+
+			
+
+		</div>
+		<!-- /main content -->
+
+	</div>
+	<!-- /page content -->
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('assets/Back/global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('assets/Back/js/app.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/demo_pages/invoice_archive.js')}}"></script>
+{% endblock %}

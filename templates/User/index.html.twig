@@ -1,0 +1,132 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+<!-- Page content -->
+	<div class="page-content">
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Invoice archive -->
+			<div class="panel panel-white">
+				<div class="panel-heading">
+					<h6 class="panel-title">Invoice archive</h6>
+					<div class="heading-elements">
+						<ul class="icons-list">
+	                		<li><a data-action="collapse"></a></li>
+	                		<li><a data-action="reload"></a></li>
+	                		<li><a data-action="close"></a></li>
+	                	</ul>
+                	</div>
+				</div>
+
+				<table class="table table-lg invoice-archive">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Period</th>
+			                <th>Issued to</th>
+			                <th>Status</th>
+			                <th>Issue date</th>
+			                <th>Due date</th>
+			                <th>Amount</th>
+			                <th class="text-center">Actions</th>
+			            </tr>
+					</thead>
+					<tbody>
+						{% for user in users %}
+							<tr>
+								<td>##{{user.id}}</td>
+								<td>{{user.name}}</td>
+				                <td>
+				                	<h6 class="no-margin">
+				                		<a href="#">{{user.lastName}}</a>
+				                		<small class="display-block text-muted">Payment method: Skrill</small>
+			                		</h6>
+			                	</td>
+				                <td>
+				                	{% if user.enabled %}
+				                		<label class="updateStatus{{user.id}} checkbox-inline checkbox-switchery checkbox-right switchery-xs">
+											<input onclick="updateStatus({{user.id}})" type="checkbox" class="switch" checked="checked">
+											Disable:
+										</label>
+				                	{% else %}
+        		                		<label class="updateStatus{{user.id}} checkbox-inline checkbox-switchery checkbox-right switchery-xs">
+        									<input onclick="updateStatus({{user.id}})" type="checkbox" class="switch" >
+        									Enable:
+        								</label>
+				                	{% endif %}
+			                	</td>
+				                <td>
+				                	April 18, 2015
+			                	</td>
+				                <td>
+				                	<span class="label label-success">Paid on Mar 16, 2015</span>
+			                	</td>
+				                <td>
+				                	<h6 class="no-margin text-bold">$17,890 <small class="display-block text-muted text-size-small">VAT $4,890</small></h6>
+				                </td>
+								<td class="text-center">
+									<ul class="icons-list">
+										<li><a href="#" data-toggle="modal" data-target="#invoice"><i class="icon-file-eye"></i></a></li>
+										<li class="dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-file-text2"></i> <span class="caret"></span></a>
+											<ul class="dropdown-menu dropdown-menu-right">
+												<li><a href="#"><i class="icon-file-download"></i> Download</a></li>
+												<li><a href="#"><i class="icon-printer"></i> Print</a></li>
+												<li class="divider"></li>
+												<li><a href="#"><i class="icon-file-plus"></i> Edit</a></li>
+												<li><a href="#"><i class="icon-cross2"></i> Remove</a></li>
+											</ul>
+										</li>
+									</ul>
+								</td>
+				            </tr>
+			            {% endfor %}
+		            </tbody>
+	            </table>
+			</div>
+			<!-- /invoice archive -->
+
+		</div>
+		<!-- /main content -->
+
+	</div>
+	<!-- /page content -->
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('assets/Back/global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('assets/Back/js/app.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/demo_pages/invoice_archive.js')}}"></script>
+	<script type="text/javascript">
+		function updateStatus(id_user){
+				$.ajax({  
+			     url:        "{{path('update_user_status')}}",  
+			     type:       'POST',   
+			     dataType:   'json',
+			     data: {
+			     	id_user : id_user
+			     } , 
+			     async:      true,  
+			     
+			     success: function(data, status) { 
+			        var enabled = data['enabled'];
+			        if(enabled){
+			        	$('.updateStatus'+id_user).empty().html('<label class="updateStatus'+id_user+' checkbox-inline checkbox-switchery checkbox-right switchery-xs"><input onclick="updateStatus('+id_user+')" type="checkbox" class="switch" checked="checked" data-switchery="true" style="display: none;"><span class="switchery switchery-default" style="background-color: rgb(76, 175, 80); border-color: rgb(76, 175, 80); box-shadow: rgb(76, 175, 80) 0px 0px 0px 8px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"><small style="left: 14px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"></small></span>Disable:</label>');
+			        }else{
+			        	$('.updateStatus'+id_user).empty().html('<label class="updateStatus'+id_user+' checkbox-inline checkbox-switchery checkbox-right switchery-xs"><input onclick="updateStatus('+id_user+')" type="checkbox" class="switch" data-switchery="true" style="display: none;"><span class="switchery switchery-default" style="box-shadow: rgb(223, 223, 223) 0px 0px 0px 0px inset; border-color: rgb(223, 223, 223); background-color: rgb(255, 255, 255); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s;"><small style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"></small></span>Enable:</label>');
+			        }
+			     },  
+			     error : function(xhr, textStatus, errorThrown) {  
+			        alert('Ajax request failed.');  
+			     }  
+			  });
+		}
+	</script>
+{% endblock %}
