@@ -1,0 +1,103 @@
+<link href="{{asset('assets/Back/css/styles.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('assets/Front/css/bootstrap.min.css')}}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="player_list" onclick="openOption('playe_list_shoose')">
+  <i class="fa fa-list"></i>
+  <p>Player List</p>
+</div>
+
+<div class="playe_list_shoose" style="width: 45%;font-size: 10px;overflow-y: auto;" id="playe_list_shoose" style="display: none;">
+  <div class="row block_title_movie">
+    <div class="col-sm-12">Available for Movie Film</div>
+  </div>
+  <div class="row header_playlist">
+    <div class="col-xs-12 col-md-12" style="text-align: center;">
+      Player
+    </div>
+  </div>
+  {% set i = 1 %}
+  {% for link in show.links %}
+    <div onclick="switchLink('{{link.id}}')" class="row player_option" style="cursor: pointer;">
+      <div class="col-xs-12 col-md-12" style="text-align: center;">
+        Player {{i}}
+        <span class="video_quality">HD</span>
+      </div>
+    </div>
+    {% set i = i+1 %}
+  {% endfor %}
+  <div class="close_playlist" onclick="closeOption('playe_list_shoose')">
+    <i class="fa fa-times"></i>
+    <p>Close</p>
+  </div>
+</div>
+
+<script>
+    function openOption($id) {
+      document.getElementById($id).style.display = "block";
+    }
+    function closeOption($id) {
+      document.getElementById($id).style.display = "none";
+    }
+</script>
+
+<iframe class="iframe_videoplayer" allowfullscreen src="">
+</iframe>
+<script src="{{asset('assets/Back/global_assets/js/core/libraries/jquery.min.js')}}"></script>
+<script src="{{asset('assets/Front/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('assets/Back/global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+<script src="{{asset('assets/Back/global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+<script src="{{asset('assets/Back/js/app.js')}}"></script>
+<script src="{{asset('assets/Back/global_assets/js/demo_pages/invoice_archive.js')}}"></script>
+<script type="text/javascript">
+  $('#videoSwitcher').on('change', function() {
+  	$('iframe').attr('src',$('#videoSwitcher').find(":checked").val());
+  });
+
+  function switchLink(id){
+    $.ajax({  
+       url:        "{{path('get_link_src')}}",  
+       type:       'POST',   
+       dataType:   'json',
+       data: {
+        id : id
+       } , 
+       async:      true,  
+       
+       success: function(data, status) { 
+        $('.iframe_videoplayer').attr('src',data['link']);
+        $('.close_playlist').click();
+       },  
+       error : function(xhr, textStatus, errorThrown) {  
+          alert('Ajax request failed.');  
+       }  
+    });
+  	
+  }
+
+ {% if show.links|length >= 1 %}
+  $(document).ready(function(e) {
+    $.ajax({  
+       url:        "{{path('get_link_src')}}",  
+       type:       'POST',   
+       dataType:   'json',
+       data: {
+        id : {{show.links[0].id}}
+       } , 
+       async:      true,  
+       
+       success: function(data, status) { 
+        $('iframe').attr('src',data['link']);
+       },  
+       error : function(xhr, textStatus, errorThrown) {  
+          alert('Ajax request failed.');  
+       }  
+    });
+  });
+  {% endif %}
+
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
+</script>

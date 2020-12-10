@@ -1,0 +1,162 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+{% block body %}
+	<div class="container">
+		<form method="post" action="{{path('add_film')}}" class="block_form_movie">
+			<fieldset class="content-group">
+				<legend class="text-bold">Nouveau Anime</legend>
+
+				<div class="form-group row">
+					<label class="control-label col-lg-2 title_input">Titre</label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" placeholder="Titre...." name="title" id="title">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<span id="alert_imdb" style="display:none;" class="alert-danger" role="alert" >Ce film existe déja veuillez saisir un nouveau Imdb!</span>
+					<label class="control-label col-lg-2 title_input">Imd</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" value="" placeholder="IMDB" name="imdb" id="imdb">
+					</div>
+					<div class="col-sm-2">
+				  		<button class="btn btn-danger" id="btn_get_info"  type="button">Récupérer</button>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="control-label col-lg-2 title_input">Année</label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" placeholder="Année...." name="year" id="year">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="control-label col-lg-2 title_input">Poster</label>
+					<div class="col-lg-10">
+						<img id="poster" src="{{asset('assets/Back/img/placeholder.png')}}" alt="">
+				  		<input hidden id="posterurl" type="text" name="poster" >
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="control-label col-lg-2 title_input">Type</label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" placeholder="Type...." value="anime" name="type" id="type">
+					</div>
+				</div>
+
+				<div class="panel panel-body login-form add_link_card">
+					<div class="text-center">
+					<h5 class="content-group">Veuillez saisir les liens <small class="display-block"></small></h5>
+					</div>
+					<div class="form-group has-feedback has-feedback-left row row-form-links">
+					<div class="col-sm-2">
+						<label for="links" class="title_input">Video Player</label>
+					</div>
+					<div class="col-sm-8"> 
+						<textarea class="form-control search_input" id="links" name="links"></textarea>
+					</div>
+					<div class="col-sm-2 text-center">
+						<a class="btn btn_add_links" onclick="add_multiple()">Add multiple links</a>
+					</div>
+					</div>
+					<div class="all_links ">
+					<table class="table_links">
+						<thead>
+						<tr>
+							<th>Title</th>
+							<th>Url</th>
+							<th>Control</th>
+						</tr>
+						</thead>
+						<tbody class="body_links">
+						
+						</tbody>
+					</table>
+					</div>
+          		</div>
+				  
+				<div class="row episodes">
+					
+				</div>
+
+				<div class="form-group row">
+					<div class="col-sm-12 text-center">
+						<input type="submit" value="enregistrer" class="btn btn-default submit_btn" >
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+
+<script type="text/javascript">
+	$('#btn_get_info').on('click',function(){
+		var imdb = $('#imdb').val();
+		$.ajax({  
+	     url:        "{{path('get_movie_info')}}",  
+	     type:       'POST',   
+	     dataType:   'json',
+	     data: {
+	     	imdb : imdb
+	     } , 
+	     async:      true,  
+	     
+	     success: function(data, status) { 
+	        var show = data['show'];
+	        if(show=='Show exist'){
+    			$('#alert_imdb').empty().html('Ce film existe déja veuillez saisir un nouveau Imdb!');
+    			$('#alert_imdb').css('display','');
+    			return true;
+	        }
+	        if(show=='error'){
+    			$('#alert_imdb').empty().html('Imdb incorrecte!');
+    			$('#alert_imdb').css('display','');
+    			return true;
+	        }
+	        $('#title').val(show['title']);
+	        $('#year').val(show['year']);
+	        //$('#type').val(show['type']);
+	        $('#poster').attr('src','http://image.tmdb.org/t/p/w500'+show['poster']);
+	        $('#posterurl').val('http://image.tmdb.org/t/p/w500'+show['poster']);
+	        var html = ''; 	 	
+		  	html +='<div class="row header_table"><div class="col-sm-4">Season</div><div class="col-sm-4">Title</div><div class="col-sm-4">Date</div></div>'; 	 	
+	        for (var i = 1 ; i <= show['totalSeasons']; i++) {
+	        	if(typeof(show['seasons']['season'+i])   === 'undefined' ){
+	        	}else{
+	        		html += '<div class="row"><div class="col-sm-4">'+show["seasons"]["season"+i]["title"]+'</div><div  class="col-sm-8">';
+			        for (var j = 1 ; j <= show['seasons']['season'+i]['count']; j++) {
+			        	if(typeof(show['seasons']['season'+i]['episodes'][j])   === 'undefined' ){
+			        	}else{
+			        		html += '<div class="row"><div class="col-sm-6">'+show['seasons']['season'+i]['episodes'][j]['title']+' </div><div class="col-sm-6">'+show['seasons']['season'+i]['episodes'][j]['date']+'</div></div>';
+			        	}
+			    	}
+				    	html += "</div></div>";
+	        	}
+	        }
+		   	$('.episodes').addClass('episode_style');
+	        $('.episodes').empty().html(html);
+	     },  
+	     error : function(xhr, textStatus, errorThrown) {  
+	        alert('Ajax request failed.');  
+	     }  
+	  });
+	});
+	 
+	 function add_multiple(){
+        var links = $('#links').val();
+        links = links.split('\n');
+        console.log(links);
+        for (var i = links.length - 1; i >= 0; i--) {
+          var html = '';
+          var linkslen = $('.body_links tr').length+125;
+          html += '<tr id="'+linkslen+'"><td><input type="text" name="titre'+linkslen+'" value="Player'+linkslen+'"></td><td><input type="text" name="url'+linkslen+'" value="'+links[i]+'"></td><td><a class="delete_link" onclick="delete_link('+linkslen+')"><i class="fal fa-trash"></i></a></td></tr>';
+          $('.body_links').append(html);
+        }
+      }
+      function delete_link(id){
+        $('#'+id).remove();
+      }
+</script>
+{% endblock %}

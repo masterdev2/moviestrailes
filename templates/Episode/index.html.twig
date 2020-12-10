@@ -1,0 +1,95 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+{% set user = app.user %}
+<!-- Page content -->
+	<div class="page-content">
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<form action="{{path('search_episodes')}}" method="post"  class="block_form_search">
+				<fieldset class="content-group">
+					<legend class="text-bold">Recherche Episode</legend>
+
+					<div class="form-group">
+						<label class="control-label col-lg-2 title_search">Titre</label>
+						<div class="col-lg-8">
+							<input required type="text" class="form-control search_input" placeholder="Recherche...." name="query">
+						</div>
+						<input type="submit" class="btn btn-default submit_search col-sm-2">
+					</div>
+				</fieldset>
+			</form>
+
+			<!-- Invoice archive -->
+			<div class="panel panel-white block_table_data">
+				<div class="panel-heading">
+					<h6 class="panel-title">Episodes archive</h6>
+					<div class="heading-elements">
+						<ul class="icons-list">
+	                		<li><a data-action="collapse"></a></li>
+	                		<li><a data-action="reload"></a></li>
+	                		<li><a data-action="close"></a></li>
+	                	</ul>
+                	</div>
+				</div>
+
+				<table class="table table-lg">
+					<thead class="thead_custom">
+						<tr>
+							<th>#</th>
+							<th>Year</th>
+			                <th>Nom</th>
+			                <th>Link</th>
+            				{% if is_granted('ROLE_ADMIN') %}
+			                	<th class="text-center">Actions</th>
+			                {% endif %}
+			            </tr>
+					</thead>
+					<tbody>
+						{% for episode in episodes %}
+							<tr class="data_row">
+								<td class="id_row">#{{episode.id}}</td>
+								<td>{{episode.year}}</td>
+				                <td>
+				                	{{episode.title}}</a>
+			                	</td>
+				                <td>
+				                	{% if episode.links|length !=0 %}
+				                		<a class="btn_options" href="{{path('show_iframe', {accessToken : user.accessToken , imdb : episode.imdb} )}}"><i class="fal fa-video"></i></a>
+				                	{% endif %}
+			                	</td>
+        						{% if is_granted('ROLE_ADMIN') %}
+									<td class="text-center">
+										<a href="{{path('movie_links', { imdb: episode.imdb })}}" class="btn_options"><i class="fal fa-link"></i></a>
+										<a href="{{path('movie_delete', { id: episode.id })}}" class="btn_options"><i class="fal fa-trash"></i></a>
+									</td>
+								{% endif %}
+				            </tr>
+			            {% endfor %}
+		            </tbody>
+	            </table>
+	            <div class="navigation">
+	                {{ knp_pagination_render(episodes) }}
+	            </div>
+			</div>
+			<!-- /invoice archive -->
+
+		</div>
+		<!-- /main content -->
+
+	</div>
+	<!-- /page content -->
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('assets/Back/global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('assets/Back/js/app.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/demo_pages/invoice_archive.js')}}"></script>
+{% endblock %}

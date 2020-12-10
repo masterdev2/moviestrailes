@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Movies!{% endblock %}</title>
+
+  <!-- Global stylesheets -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+  <link href="{{asset('assets/Back/global_assets/css/icons/icomoon/styles.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{asset('assets/Back/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{asset('assets/Back/css/core.min.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{asset('assets/Back/css/components.min.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{asset('assets/Back/css/colors.min.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{asset('assets/Back/css/styles.css')}}" rel="stylesheet" type="text/css">
+  <!-- /global stylesheets -->
+
+  <!-- Core JS files -->
+  <script src="{{asset('assets/Back/global_assets/js/plugins/loaders/pace.min.js')}}"></script>
+  <script src="{{asset('assets/Back/global_assets/js/core/libraries/jquery.min.js')}}"></script>
+  <script src="{{asset('assets/Back/global_assets/js/core/libraries/bootstrap.min.js')}}"></script>
+  <script src="{{asset('assets/Back/global_assets/js/plugins/loaders/blockui.min.js')}}"></script>
+  <script src="{{asset('assets/Back/global_assets/js/plugins/ui/nicescroll.min.js')}}"></script>
+  <script src="{{asset('assets/Back/global_assets/js/plugins/ui/drilldown.js')}}"></script>
+  <!-- /core JS files -->
+
+  <!-- Theme JS files -->
+  <script src="{{asset('assets/Back/global_assets/js/plugins/visualization/d3/d3.min.js')}}"></script>
+  <script src="{{asset('assets/Back/global_assets/js/plugins/visualization/d3/d3_tooltip.js')}}"></script>
+  <script src="{{asset('assets/Back/global_assets/js/plugins/forms/styling/switchery.min.js')}}"></script>
+  <script src="{{asset('assets/Back/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js')}}"></script>
+  <script src="{{asset('assets/Back/global_assets/js/plugins/ui/moment/moment.min.js')}}"></script>
+  <script src="{{asset('assets/Back/global_assets/js/plugins/pickers/daterangepicker.js')}}"></script>
+
+  <script src="{{asset('assets/Back/js/app.js')}}"></script>
+  <script src="{{asset('assets/Back/global_assets/js/demo_pages/dashboard.js')}}"></script>
+
+  <script src="https://kit.fontawesome.com/010eb17f80.js"></script>
+  {% block stylesheets %}{% endblock %}
+  <!-- /theme JS files -->
+
+</head>
+
+<body>
+{% set lang = app.request.locale %}
+{% for message in app.flashes('success') %}
+  <div class="alert alert-success" style="position: fixed;bottom: 34px;right: 0px;z-index: 999;">
+    <strong>{{message}}</strong>
+  </div>
+{% endfor %}
+{% for message in app.flashes('error') %}
+  <div class="alert alert-danger" style="position: fixed;bottom: 34px;right: 0px;z-index: 999;">
+    <strong>{{message}}</strong>
+  </div>
+{% endfor %}
+  <!-- Main navbar -->
+    <div class="navbar navbar-inverse">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="{{path('acceuil')}}"><img src="{{asset('assets/Back/global_assets/images/logo_light.png')}}" alt=""></a>
+
+        <ul class="nav navbar-nav pull-right visible-xs-block">
+          <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+        </ul>
+      </div>
+
+      <div class="navbar-collapse collapse" id="navbar-mobile">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown language-switch">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+              {#{% if lang == 'en' %}
+                <img src="{{asset('assets/Back/global_assets/images/flags/gb.png')}}" class="position-left" alt="">
+                English
+              {# {% elseif lang == 'es' %}
+                <img src="{{asset('assets/Back/global_assets/images/flags/es.png')}}" class="position-left" alt="">
+                España #}
+              {#{% else %}#}
+                Français
+                <img src="{{asset('assets/Back/global_assets/images/flags/ua.png')}}" class="position-left" alt="">
+              {#{% elseif lang == 'it' %}
+                Italian
+                <img src="{{asset('assets/Back/global_assets/images/flags/it.png')}}" class="position-left" alt="">
+              {% else %}
+                Deutsch
+                <img src="{{asset('assets/Back/global_assets/images/flags/de.png')}}" class="position-left" alt="">
+              {% endif %}#}
+              <span class="caret"></span>
+            </a>
+
+            <ul class="dropdown-menu">
+              <!-- <li>
+                <a href="{{path('lang_switch',{'lang':'de'})}}" class="deutsch"><img src="{{asset('assets/Back/global_assets/images/flags/de.png')}}" alt=""> Deutsch</a>
+              </li> -->
+              <li>
+                <a href="{{path('lang_switch',{'lang':'fr'})}}" class="ukrainian"><img src="{{asset('assets/Back/global_assets/images/flags/ua.png')}}" alt=""> Français</a>
+              </li>
+              <!--<li>
+                <a href="{{path('lang_switch',{'lang':'en'})}}" class="english"><img src="{{asset('assets/Back/global_assets/images/flags/gb.png')}}" alt=""> English</a>
+              </li>
+               <li>
+                <a href="{{path('lang_switch',{'lang':'es'})}}" class="espana"><img src="{{asset('assets/Back/global_assets/images/flags/es.png')}}" alt=""> España</a>
+              </li>
+              <li>
+                <a href="{{path('lang_switch',{'lang':'it'})}}" class="russian"><img src="{{asset('assets/Back/global_assets/images/flags/it.png')}}" alt=""> Italian</a>
+              </li> -->
+            </ul>
+          </li>
+
+          <li class="dropdown dropdown-user">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+              <img src="{{asset('assets/Back/global_assets/images/placeholders/placeholder.jpg')}}" alt="">
+              <span>{# {{app.user.name}} #}</span>
+              <i class="caret"></i>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li><a href="{{path('user_logout')}}"><i class="icon-switch2"></i> Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- /main navbar -->
+
+
+    <!-- Second navbar -->
+    <div class="navbar navbar-default" id="navbar-second">
+      <ul class="nav navbar-nav no-border visible-xs-block">
+        <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
+      </ul>
+
+      <div class="navbar-collapse collapse" id="navbar-second-toggle">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="{{path('admin')}}"><i class="icon-display4 position-left"></i> Dashboard</a></li>
+
+          <li class="dropdown mega-menu mega-menu-wide">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="icon-puzzle4 position-left"></i> Shows <span class="caret"></span>
+            </a>
+
+            <div class="dropdown-menu dropdown-content">
+              <div class="dropdown-content-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <span class="menu-heading underlined">Films</span>
+                    <ul class="menu-list">
+                      <li>
+                        <a href="{{path('films')}}"><i class="icon-pencil3"></i> Liste</a>
+                      </li>
+                      {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                          <a href="{{path('add_film')}}"><i class="icon-file-css"></i> Ajout</a>
+                        </li>
+                        <li>
+                          <a href="{{path('film_with_no_videos')}}"><i class="icon-file-css"></i> Sans videos</a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="menu-heading underlined">Anime</span>
+                    <ul class="menu-list">
+                      <li>
+                        <a href="{{path('animes')}}"><i class="icon-grid"></i> Liste</a>
+                      </li>
+                      {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                          <a href="{{path('add_anime')}}"><i class="icon-browser"></i> Ajout</a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="menu-heading underlined">Séries</span>
+                    <ul class="menu-list">
+                      <li>
+                        <a href="{{path('series')}}"><i class="icon-puzzle4"></i> Liste</a>
+                      </li>
+                      {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                          <a href="{{path('add_serie')}}"><i class="icon-popout"></i> Ajout</a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="menu-heading underlined">Episodes</span>
+                    <ul class="menu-list">
+                      <li>
+                        <a href="{{path('episodes')}}"><i class="icon-table2"></i> Liste</a>
+                      </li>
+                      {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                          <a href="{{path('episode_with_no_videos')}}"><i class="icon-file-css"></i> Sans videos</a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="dropdown mega-menu mega-menu-wide">
+            <a href="{{path('user_api')}}">
+              <i class="icon-stars position-left"></i> Api
+            </a>
+          </li>
+
+          {% if is_granted('ROLE_ADMIN') %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-make-group position-left"></i> Utilisateurs <span class="caret"></span>
+              </a>
+
+              <ul class="dropdown-menu width-250">
+                <li class="dropdown-header">Gestion utilisateurs</li>            
+                <li class="dropdown-submenu-hover">
+                  <a href="{{path('users')}}">
+                    <i class="icon-task"></i>liste
+                  </a>
+                </li>
+
+                <li class="dropdown-submenu-hover">
+                  <a href="{{path('user_add')}}"><i class="icon-images2"></i> Ajout</a>
+                </li>
+              </ul>
+            </li>
+          {% endif %}
+		  
+		  {% if is_granted('ROLE_ADMIN') %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-make-group position-left"></i> Admin <span class="caret"></span>
+              </a>
+
+              <ul class="dropdown-menu width-250">
+                <li class="dropdown-header">Gestion Files</li>            
+					<li class="dropdown-submenu-hover">
+					  <a href="{{path('admin_files')}}">
+						<i class="icon-task"></i>liste
+					  </a>
+					</li>
+					<li class="dropdown-submenu-hover">
+					  <a href="{{path('admin_files_scrapping')}}">
+						<i class="icon-task"></i>files scrraping
+					  </a>
+					</li>
+					<li class="dropdown-submenu-hover">
+					  <a href="{{path('admin_links_check')}}">
+						<i class="icon-task"></i>check links
+					  </a>
+					</li>
+				</li>
+
+                <li class="dropdown-header">Gestion WebSites</li>            
+					<li class="dropdown-submenu-hover">
+					  <a href="{{path('admin_websites')}}">
+						<i class="icon-task"></i>liste
+					  </a>
+					</li>
+					<li class="dropdown-submenu-hover">
+					  <a href="{{path('websitesAll')}}">
+						<i class="icon-task"></i>populate websites
+					  </a>
+					</li>
+              </ul>
+            </li>
+          {% endif %}
+
+        </ul>
+
+      </div>
+    </div>
+    <!-- /second navbar -->
+
+
+    <!-- Page header -->
+    <div class="page-header">
+      <div class="page-header-content">
+        <div class="page-title">
+          <h4>
+            <i class="icon-arrow-left52 position-left"></i>
+            <span class="text-semibold">Home</span> - Dashboard
+            <small class="display-block">Good morning, {# {{app.user.name}} {{app.user.lastName}} #}!</small>
+          </h4>
+        </div>
+      </div>
+    </div>
+    <!-- /page header -->
+  <!-- Page container -->
+  <div class="page-container">
+  {% block body %}{% endblock %}
+
+  </div>
+  <!-- /page container -->
+  {% block javascripts %}{% endblock %}
+</body>
+</html>
+

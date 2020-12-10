@@ -1,0 +1,96 @@
+{% extends "base_simple.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+{% block body %}
+	<!-- Page content -->
+    <div class="page-content">
+
+      <!-- Main content -->
+      <div class="content-wrapper">
+
+        <!-- Advanced login -->
+        <form method="post">
+          <div class="panel panel-body login-form">
+            <div class="text-center">
+              <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+              <h5 class="content-group">Créer votre compte <small class="display-block">vos accés</small></h5>
+            </div>
+
+            <div class="form-group has-feedback has-feedback-left">
+              <input type="text" required class="form-control" placeholder="Nom" name="name">
+              <div class="form-control-feedback">
+                <i class="icon-user text-muted"></i>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback has-feedback-left">
+              <input type="text" required class="form-control" placeholder="Prénom" name="lastName">
+              <div class="form-control-feedback">
+                <i class="icon-user text-muted"></i>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback has-feedback-left">
+              <input type="text" required class="form-control" placeholder="UserName" name="userName">
+              <div class="form-control-feedback">
+                <i class="icon-user text-muted"></i>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback has-feedback-left">
+              <input type="text" required class="form-control" placeholder="Email" name="email">
+              <div class="form-control-feedback">
+                <i class="icon-user text-muted"></i>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback has-feedback-left">
+              <input type="text" class="form-control" required placeholder="Site web" name="webSite">
+              <div class="form-control-feedback">
+                <i class="icon-user text-muted"></i>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback has-feedback-left">
+              <input type="password" required class="form-control" placeholder="Mot de passe" name="mdp">
+              <div class="form-control-feedback">
+                <i class="icon-lock2 text-muted"></i>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback has-feedback-left">
+              <input type="password" required class="form-control" placeholder="Confirmation de mot de passe" name="cmdp">
+              <div class="form-control-feedback">
+                <i class="icon-lock2 text-muted"></i>
+              </div>
+            </div>
+
+            <div class="form-group login-options">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="checkbox-inline">
+                    <input type="checkbox" class="styled" checked="checked">
+                    Remember
+                  </label>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn bg-blue btn-block">Enregistrer <i class="icon-arrow-right14 position-right"></i></button>
+            </div>
+
+            <div class="content-divider text-muted form-group"><span>Vous avez -déja un compte?</span></div>
+            <a href="{{path('user_login')}}" class="btn btn-default btn-block content-group">Connnexion</a>
+            <span class="help-block text-center no-margin">By continuing, you're confirming that you've read our <a href="#">Terms &amp; Conditions</a> and <a href="#">Cookie Policy</a></span>
+          </div>
+        </form>
+        <!-- /advanced login -->
+
+      </div>
+      <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
+{% endblock %}

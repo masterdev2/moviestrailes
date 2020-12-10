@@ -1,0 +1,89 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+{% block body %}
+	<!-- Page content -->
+    <div class="page-content">
+
+      <!-- Main content -->
+      <div class="content-wrapper ">
+
+        <!-- Advanced login -->
+        <form method="post">
+          <div class="panel panel-body login-form add_link_card">
+            <div class="text-center">
+              <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+              <h5 class="content-group">Veuillez saisir les liens <small class="display-block"></small></h5>
+            </div>
+
+            <div class="form-group has-feedback has-feedback-left row row-form-links">
+              <div class="col-sm-2">
+                <label for="links" class="title_input">Video Player</label>
+              </div>
+              <div class="col-sm-8"> 
+                <textarea class="form-control search_input" id="links" name="links"></textarea>
+              </div>
+              <div class="col-sm-2 text-center">
+                <a class="btn btn_add_links" onclick="add_multiple()">Add multiple links</a>
+              </div>
+            </div>
+			<div style="width: 45%;text-align: center;margin-left: 29.5%;" class="form-group row">
+				<label class="control-label col-lg-2 title_input">Langue</label>
+				<div class="col-lg-10" style="margin-top: 8px;">
+					<select name="langue">
+						<option value="fr">FR</soption>
+						<option value="en">EN</soption>
+					</select>
+				</div>
+			</div>
+            <div class="all_links ">
+              <table class="table_links">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Url</th>
+                    <th>Control</th>
+                  </tr>
+                </thead>
+                <tbody class="body_links">
+                  {% for link in film.links %}
+                    <tr id="{{link.id}}">
+                    <td><input type="text" name="title{{link.id}}" value="Player{{link.id}}"></td>
+                    <td><input type="text" name="url{{link.id}}" value="{{link.link}}"></td>
+                    <td><a class="delete_link" onclick="delete_link({{link.id}})"><i class="fal fa-trash"></i></a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <div class="form-group text-center">
+              <button type="submit" class="btn btn_save_link">Enregistrer <i class="icon-arrow-right14 position-right"></i></button>
+            </div>
+
+          </div>
+        </form>
+        <!-- /advanced login -->
+
+      </div>
+      <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
+
+    <script type="text/javascript">
+      function add_multiple(){
+        var links = $('#links').val();
+        links = links.split('\n');
+        console.log(links);
+        for (var i = links.length - 1; i >= 0; i--) {
+          var html = '';
+          var linkslen = $('.body_links tr').length+125;
+          html += '<tr id="'+linkslen+'"><td><input type="text" name="title'+linkslen+'" value="Player'+linkslen+'"></td><td><input type="text" name="url'+linkslen+'" value="'+links[i]+'"></td><td><a class="delete_link" onclick="delete_link('+linkslen+')"><i class="fal fa-trash"></i></a></td></tr>';
+          $('.body_links').append(html);
+        }
+      }
+      function delete_link(id){
+        $('#'+id).remove();
+      }
+    </script>
+{% endblock %}

@@ -1,0 +1,212 @@
+.btn_options i {
+    color: #37474f;
+    font-size: 18px;
+    padding: 0 5px;
+}
+.title_search,.title_input{
+	text-align: center;
+    font-size: 18px;
+    padding-top: 5px;
+    letter-spacing: 2px;
+}
+.search_input,.form_input_movie{
+    border-color: #37474f;
+    border-radius: 0;
+}
+.submit_search,.submit_btn{
+    background: #37474f;
+    color: #fff;
+    border-radius: 0;
+}
+.thead_custom{
+    background: #607986;
+    color: #fff;
+}
+.thead_custom th{
+    font-weight: bold;
+    font-size: 16px;
+}
+.block_table_data{
+	box-shadow: 0 10px 31px 0 rgba(7, 152, 255, 0.15);
+    border: unset;
+}
+.block_form_search,.block_form_movie{
+    padding: 30px;
+    background: #fff;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 31px 0 rgba(7, 152, 255, 0.15);
+    border: unset;
+}
+.block_form_search legend,.block_form_movie legend{
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+}
+.block_table_data .panel-title{
+	text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+.data_row .id_row{
+	font-weight: bold;
+    font-size: 14px;
+}
+.data_row:hover {
+    background: #aab7bd;
+    color: #fff;
+    transition: .5s;
+    cursor: initial;
+    font-weight: 500;
+}
+.data_row:hover .btn_options i{
+	color: #fff;
+}
+img#poster {
+    width: 300px;
+    box-shadow: 0 5px 20px #00000014;
+}
+#btn_get_info{
+	width: 100%;
+    border-radius: 0;
+    background: #37474f;
+    border-color: #37474f;
+}
+#btn_get_info:hover {
+    background: #25353e;
+    border-color: #25353e;
+}
+.submit_btn {
+    padding: 10px 80px;
+    border: unset;
+    text-transform: capitalize;
+}
+.submit_btn:hover {
+    background: #25353e;
+    border-color: #25353e;
+    color: #fff;
+}
+.episode_style{
+	border: 1px solid #b7b6b6;
+    margin-bottom: 50px;
+    margin-top: 30px;
+}
+.episode_style > .row {
+    border-bottom: 1px solid #b7b6b6;
+    margin: 0;
+}
+.episode_style > .row:last-child{
+	border-bottom: unset;
+}
+.episode_style > .row > .col-sm-4 {
+    padding: 30px 0;
+    text-align: center;
+	font-weight: 500;
+    font-size: 14px;
+}
+.episode_style > .row > .col-sm-8{
+	border-left: 1px solid #b7b6b6;
+	min-height: 85px;
+}
+.episode_style > .row > .col-sm-8 > .row{
+	border-top: 1px solid #b7b6b6;
+}
+.episode_style > .row > .col-sm-8 > .row:first-child{
+	border-top: unset;
+}
+.episode_style > .row > .col-sm-8 > .row > div {
+    padding: 15px;
+}
+.episode_style > .row > .col-sm-8  .col-sm-6:nth-child(1) {
+	border-right: 1px solid #b7b6b6;
+}
+.header_table {
+    background: #607986;
+    color: #fff;
+}
+.episode_style > .header_table > .col-sm-4 {
+    padding: 20px 0;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+.episode_style > .row:nth-child(2n){
+    background: #ececec;
+}
+.iframe_videoplayer{
+	width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border:0;
+}
+.player_list{
+    display: flex;
+    position: fixed;
+    z-index: 99999999;
+    top: 0px;
+    right: 0;
+    background: #5b8ece;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    box-shadow: 0 20px 20px 10px #5b8ece21;
+    font-family: Poppins;
+    cursor: pointer;
+	padding: 15px;
+}
+.player_list p,.close_playlist p{
+    margin-left: 10px;
+    margin-bottom: 0;
+}
+.playe_list_shoose{
+    position: fixed;
+    z-index: 99999999;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background: #37474f;
+    color: #fff;
+}
+.close_playlist{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 15%;
+    padding: 15px 30px;
+    font-family: Poppins;
+    background: #ff4646;
+    color: #fff;
+    cursor: pointer;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header_playlist{
+    margin: 0!important;
+    background: #27333a;
+    padding: 15px;
+    font-weight: 500;
+}
+.player_option{
+    margin: 0!important;
+    padding: 15px;
+    border-bottom: 1px solid #505f67;
+}
+.player_option:last-child{
+	border-bottom: unset!important;
+}
+.video_quality{
+    padding: 5px 10px;
+    background: #52bd51;
+    font-weight: 500;
+}
+.block_title_movie{
+	padding: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}

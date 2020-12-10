@@ -1,0 +1,107 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+<!-- Page content -->
+	<div class="page-content">
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<form action="{{path('search_animes')}}" method="post" class="block_form_search">
+				<fieldset class="content-group">
+					<legend class="text-bold">Recherche Anime</legend>
+
+					<div class="form-group">
+						<label class="control-label col-lg-2 title_search">Titre</label>
+						<div class="col-lg-8">
+							<input required type="text" class="form-control search_input" placeholder="Recherche...." name="query">
+						</div>
+						<input type="submit" class="btn btn-default  submit_search col-sm-2">
+					</div>
+				</fieldset>
+			</form>
+
+			<!-- Invoice archive -->
+			<div class="panel panel-white block_table_data">
+				<div class="panel-heading">
+					<h6 class="panel-title">Anime archive</h6>
+					<div class="heading-elements">
+						<ul class="icons-list">
+	                		<li><a data-action="collapse"></a></li>
+	                		<li><a data-action="reload"></a></li>
+	                		<li><a data-action="close"></a></li>
+	                	</ul>
+                	</div>
+				</div>
+
+				<table class="table table-lg">
+					<thead  class="thead_custom">
+						<tr>
+							<th>#</th>
+							<th>Poster</th>
+			                <th>Tmdb</th>
+							<th>Titre</th>
+			                <th>Date</th>
+			                <th>Seasons</th>
+            				{% if is_granted('ROLE_ADMIN') %}
+			                	<th class="text-center">Actions</th>
+							{% endif %}
+			            </tr>
+					</thead>
+					<tbody>
+						{% for anime in animes %}
+							{% set anime = anime.show %}
+							{% if anime.type == "anime" %}
+								<tr class="data_row">
+									<td class="id_row">#{{anime.id}}</td>
+									<td class="id_row"><img src="{{anime.poster}}" style="width:60px;"></td>
+									<td>{{anime.tmdb}}</td>
+					                <td>
+					                	{% if app.request.locale == 'en' %}
+					                		{{anime.title}}
+					                	{% else %}
+					                		{% for title in anime.titles %}
+					                			{% if title.lang == app.request.locale %}
+					                				{{title.title}}
+					                			{% endif %}
+					                		{% endfor %}
+					                	{% endif %}
+					                </td>
+					                <td>{{anime.year}}</td>
+					                <td>
+					                	<a class="btn_options" href="{{path('show_seasons', {id: anime.id})}}"><i class="fal fa-film"></i></a>
+					                </td>
+			                		{% if is_granted('ROLE_ADMIN') %}
+										<td class="text-center">
+											<a href="{{path('anime_update', { id: anime.imdb })}}" class="btn_options"><i class="fal fa-repeat"></i></a>
+											<a href="{{path('anime_delete', { id: anime.id })}}" class="btn_options"><i class="fal fa-trash"></i></a>
+										</td>
+									{% endif %}
+					            </tr>
+				            {% endif %}
+			            {% endfor %}
+		            </tbody>
+	            </table>
+	            <div class="navigation">
+	                {{ knp_pagination_render(animes) }}
+	            </div>
+			</div>
+			<!-- /invoice archive -->
+
+		</div>
+		<!-- /main content -->
+
+	</div>
+	<!-- /page content -->
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('assets/Back/global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('assets/Back/js/app.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/demo_pages/invoice_archive.js')}}"></script>
+{% endblock %}

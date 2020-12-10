@@ -1,0 +1,71 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="form-group row">
+				<label class="control-label col-lg-2 title_input">Websites</label>
+			</div>
+		</div>
+		<form method="post" enctype="multipart/form-data">
+			<fieldset class="content-group">
+				<legend class="text-bold">Nouveau webSite</legend>
+
+				<div class="form-group row">
+					<label class="control-label col-lg-2 title_input">Link</label>
+					<div class="col-lg-10">
+						<input type="text" required class="form-control form_input_movie" placeholder="Link...." name="link" id="link">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="control-label col-lg-2 title_input">Max</label>
+					<div class="col-lg-10">
+						<input type="text" required class="form-control form_input_movie" name="max" id="max">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="control-label col-lg-2 title_input">Langue</label>
+					<div class="col-lg-10" style="margin-top: 8px;">
+						<select name="langue">
+							<option value="fr">FR</soption>
+							<option value="en">EN</soption>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-sm-12 text-center">
+						<input type="submit" value="enregistrer" class="btn btn-default submit_btn" >
+					</div>
+				</div>
+			</fieldset>
+		</form>
+		<div class="row">
+			<div class="panel panel-white block_table_data">
+				<table class="table table-lg ">
+					<thead class="thead_custom">
+						<tr>
+							<th>#</th>
+							<th>Max</th>
+							<th>Langue</th>
+							<th>Link</th>
+							<th>Delete</th>
+			            </tr>
+					</thead>
+					<tbody>	
+						{% for website in websites %}
+							<tr class="data_row">
+								<td class="id_row">#{{website.id}}</td>
+								<td >{{website.max}}</td>
+								<td >{{website.lang}}</td>
+								<td >{{website.link}}</td>
+								<td> <a class="btn btn-danger" href="{{path('delete_website', {id: website.id})}}">delete</a> </td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
