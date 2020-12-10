@@ -1,0 +1,85 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="form-group row">
+				<label class="control-label col-lg-2 title_input">Check links</label>
+				<div class="col-sm-8">
+					<label class="checkbox-inline checkbox-switchery checkbox-right switchery-xs">
+						<input onclick="checkLinks()" {% if status %}checked{%endif%} type="checkbox" class="switch" >
+						Check links 404:
+					</label>
+				</div>
+			</div>
+		</div>
+		<form method="post" enctype="multipart/form-data">
+			<fieldset class="content-group">
+				<legend class="text-bold">Nouveau fichier</legend>
+
+				<div class="form-group row">
+					<label class="control-label col-lg-2 title_input">Titre</label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control form_input_movie" placeholder="Titre...." name="title" id="title">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="control-label col-lg-2 title_input">File</label>
+					<div class="col-sm-8">
+						<input type="file" class="form-control" name="csv" id="csv">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="control-label col-lg-2 title_input">Langue</label>
+					<div class="col-lg-10" style="margin-top: 8px;">
+						<select name="langue">
+							<option value="fr">FR</soption>
+							<option value="en">EN</soption>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-sm-12 text-center">
+						<input type="submit" value="enregistrer" class="btn btn-default submit_btn" >
+					</div>
+				</div>
+			</fieldset>
+		</form>
+		<div class="row">
+			<div class="panel panel-white block_table_data">
+				<table class="table table-lg ">
+					<thead class="thead_custom">
+						<tr>
+							<th>#</th>
+							<th>Title</th>
+							<th>Langue</th>
+							<th>Status</th>
+							<th>File Exists</th>
+							<th>Delete</th>
+			            </tr>
+					</thead>
+					<tbody>	
+						{% for file in files %}
+							<tr class="data_row">
+								<td class="id_row">#{{file.id}}</td>
+								<td >{{file.title}}</td>
+								<td >{{file.lang}}</td>
+								<td >{{file.reached}}/{{file.total}}</td>
+								<td > {% if file.fileExist() %} Oui {% else %} Non {% endif %}</td>
+								<td> <a class="btn btn-danger" href="{{path('delete_file', {id: file.id})}}">delete</a> </td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	function checkLinks(){
+		window.location.href = "{{path('admin_links_check_status')}}";
+	}
+</script>
+{% endblock %}

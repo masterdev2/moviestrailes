@@ -1,0 +1,144 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+
+
+
+{% block stylesheets %}
+    <link href="{{asset('assets/Front/css/new-age.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/Front/css/default.css')}}" rel="stylesheet">
+    <style type="text/css">
+		.footer {
+		    position: relative;
+		    left: unset;
+		    right: unset;
+		    bottom: 20px;
+		    padding: 30px 50px;
+		}
+		a{
+			color: #1e88e5;
+		}
+        .page-container{
+            background: #fff;
+            padding-top: 60px!important;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <p><b>Your API key</b>: {{app.user.accessToken}}</p>
+    <p><b>{% if app.user.stats[0] is defined %}{{app.user.stats[0].count}}{%else%}0{% endif %}</b> requests in the last 24 hours</p>
+    <br>
+    <p style="color: red">Read our frequently asked questions at the bottom of this page.</p>
+    <br> Make sure you are getting real visitor IP address (and not Cloudflare proxy IP address) if you are using Cloudflare and don't have mod_cloudflare installed on your server! If you are getting Cloudflare IPs, follow one of these guides:
+    <br>
+    <a href="https://support.cloudflare.com/hc/en-us/sections/200805497-Restoring-Visitor-IPs" target="_blank">https://support.cloudflare.com/hc/en-us/sections/200805497-Restoring-Visitor-IPs</a>
+    <br>
+    <a href="https://stackoverflow.com/a/43398466" target="_blank">https://stackoverflow.com/a/43398466</a>
+    <br>
+    <br>
+    <br>
+    <b>PHP code Get anime by IMDB ID:</b>
+    <br>
+    - change <b>*VIDEO_ID*</b> with TMDB or IMDB ID of requested movie/tv show.
+    <br> - change <b>*SEASON_NUMBER*</b> with season number of requested tv show. You can omit this parameter if requesting movies or use s=0.
+    <br>
+    <br>
+    <br>
+    <b>PHP code for generating tickets using cURL():</b>
+    <br>
+    <pre><code class="php hljs">$url = <span class="hljs-string">"https://streamzy.top/public/api/movie?access-token={{app.user.accessToken}}&imdb=*VIDEO_ID*";
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_URL, $url);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, <span class="hljs-keyword">true</span>);
+	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, <span class="hljs-keyword">true</span>);
+	curl_setopt($curl, CURLOPT_TIMEOUT, <span class="hljs-number">5</span>); <span class="hljs-comment">// in case our server is down or busy, you can specify max time in seconds to wait for response</span>
+	curl_setopt($curl, CURLOPT_HEADER, <span class="hljs-keyword">false</span>);
+	$show = curl_exec($curl);
+	curl_close($curl);</code></pre> - change <b>*VIDEO_ID*</b> with TMDB or IMDB ID of requested movie/tv show.
+    <br> - change <b>*SEASON_NUMBER*</b> with season number of requested tv show. You can omit this parameter if requesting movies or use s=0.
+    <br>
+    <br>
+    <h2 class="mt-4 mb-5">Requesting movies</h2>
+    <b>This is your request URL:</b>
+    <br>
+    <pre><code class="html hljs xml">https://streamzy.top/public/api/movie?access-token={{app.user.accessToken}}&imdb=*VIDEO_ID*</code></pre> - change <b>*VIDEO_ID*</b> with IMDB ID of requested movie.
+    <br> - for IMDB ID both formats (tt0000000 or 0000000) are accepted.
+    <br>
+    <br>
+    <br>
+    <b>Get all movies:</b>
+    <br>
+    <pre><code class="html hljs xml">https://streamzy.top/public/api/movies?access-token={{app.user.accessToken}}</code></pre>
+    <b>Get anime by IMDB ID:</b>
+    <br>
+    <pre><code class="html hljs xml">https://streamzy.top/public/api/anime?access-token={{app.user.accessToken}}&imdb=*VIDEO_ID*</code></pre>
+    <br>
+    <br>
+    <b>Get all animes:</b>
+    <br>
+    <pre><code class="html hljs xml">https://streamzy.top/public/api/movies?access-token={{app.user.accessToken}}</code></pre>
+    <br>
+    <b>Get serie by IMDB ID:</b>
+    <br>
+    <pre><code class="html hljs xml">https://streamzy.top/public/api/serie?access-token={{app.user.accessToken}}&imdb=*VIDEO_ID*</code></pre>
+    <br>
+    <br>
+    <b>Get all series:</b>
+    <br>
+    <pre><code class="html hljs xml">https://streamzy.top/public/api/series?access-token={{app.user.accessToken}}</code></pre>
+    <br>
+    <b>Get Season of a série:</b>
+    <br>
+    <pre><code class="html hljs xml">https://streamzy.top/public/api/serie_season?access-token={{app.user.accessToken}}&imdb=*VIDEO_ID*&season=num_season</code></pre>
+    <br>
+    <b>Get an Episode from Season:</b>
+    <br>
+    <pre><code class="html hljs xml">hhttps://streamzy.top/public/api/serie_anime?access-token={{app.user.accessToken}}&imdb=*VIDEO_ID*&season=num_season&episode=episode_num</code></pre>
+    <br>
+    <b>Get anime of a série:</b>
+    <br>
+    <pre><code class="html hljs xml">https://streamzy.top/public/api/serie_anime?access-token={{app.user.accessToken}}&imdb=*VIDEO_ID*&season=num_season</code></pre>
+    <br>
+    <b>Get an Episode from Season:</b>
+    <br>
+    <pre><code class="html hljs xml">https://streamzy.top/public/api/serie_season?access-token={{app.user.accessToken}}&imdb=*VIDEO_ID*&season=num_season&episode=episode_num</code></pre>
+    <br>
+    <h2 class="mt-5 mb-5">FAQ</h2>
+    <h3>Is there any limit?</h3>
+    <p>No. If you use Streamzy Developer account on your website in iframe (as intended) then there is no limit for your visitors.
+        <br> If you use Personal account the limit is 30 requests per 24 hours.</p>
+    <br>
+    <h3>Why do I see a captcha?</h3>
+    <p>If you see the captcha, it is most probably because you opened too many videos in a short time and our system has to verify that you are not a robot. Another reason could be that our system assumes your visit is suspicious for whatever reason. Don't worry - <b>visitors
+	of your website will not see it</b> if they go to your website just to watch one or few videos. According to our stats only 2% of visitors see the captcha.</p>
+    <br>
+    <h3>Why do I see a play button?</h3>
+    <p>The play button is another way of verifying that you are not a robot or scraper. It is easier than the captcha because you just have to click the play button and then you get directly to your desired video. According to our stats around 20% of visitors see the play button which means that <b>more than 75% of visitors get directly to their desired video</b>.</p>
+    <br>
+    <h3>Can I use Streamzy other than in iframe?</h3>
+    <p>You can use iframe or directlink. Any kind of avoiding our web interface, blocking ads, or scraping openload links and playing them in external players is forbidden.</p>
+    <br>
+    <h3>Can I add my own subtitles?</h3>
+    <p>Currently not but we will release this feature soon.</p>
+    <br>
+    <h3>Do you have movies in another languages?</h3>
+    <p>No. We only have movies in their original languages which is mainly English.</p>
+    <br>
+    <h3>Can I get openload links directly via JSON?</h3>
+    <p>This is not possible as this would be heavily abused.</p>
+    <br>
+    <h3>Can I check if you have a movie/episode in your database before I publish it on my website?</h3>
+    <p>Currently not but we will release this feature soon.</p>
+</div>
+
+
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('assets/Back/global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('assets/Back/js/app.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/demo_pages/invoice_archive.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+<!-- Page content -->
+{% set user = app.user %}
+	<div class="page-content">
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<form action="{{path('search_films')}}" method="post"  class="block_form_search">
+				<fieldset class="content-group">
+					<legend class="text-bold">Recherche Film</legend>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2 title_search">Titre</label>
+
+						<div class="col-sm-8">
+							<input required type="text" class="form-control search_input" placeholder="Recherche...." name="query">
+						</div>
+
+						<input type="submit" class="btn btn-default submit_search col-sm-2">
+					</div>
+
+				</fieldset>
+			</form>
+
+			<!-- Invoice archive -->
+			<div class="panel panel-white block_table_data">
+
+				<table class="table table-lg ">
+					<thead class="thead_custom">
+						<tr>
+							<th>#</th>
+							<th>Poster</th>
+							<th>Year</th>
+			                <th>Tmdb</th>
+			                <th>Nom</th>
+			                <th>Link</th>
+			                {% if is_granted('ROLE_ADMIN') %}
+			                	<th class="text-center">Actions</th>
+			                {% endif %}
+			            </tr>
+					</thead>
+					<tbody>
+						{% for film in films %}
+							{% if film.show is defined %}
+							{% set film = film.show %}
+							{% endif %}
+							{% if film.type == "movie" %}
+								<tr class="data_row">
+									<td class="id_row">#{{film.id}}</td>
+									<td class="id_row"><img src="{{film.poster}}" style="width:60px;"></td>
+									<td>{{film.year}}</td>
+									<td>{{film.tmdb}}</td>
+					                <td>
+					                	{% if app.request.locale == 'en' %}
+					                		{{film.title}}
+					                	{% else %}
+					                		{% for title in film.titles %}
+					                			{% if title.lang == app.request.locale %}
+					                				{{title.title}}
+					                			{% endif %}
+					                		{% endfor %}
+					                	{% endif %}
+				                	</td>
+					                <td>
+					                	{% if film.links|length !=0 %}
+					                		<a target="_blank" class="btn_options" href="{{path('show_iframe', {accessToken : user.accessToken , imdb : film.imdb} )}}"><i class="fal fa-video"></i></a>
+					                	{% endif %}
+				                	</td>
+					                {% if is_granted('ROLE_ADMIN') %}
+										<td class="text-center">
+											<a href="{{path('movie_links', { imdb: film.imdb })}}" class="btn_options"><i class="fal fa-link"></i></a>
+											<a href="{{path('movie_delete', { id: film.id })}}" class="btn_options"><i class="fal fa-trash"></i></a>
+										</td>
+									{% endif %}
+					            </tr>
+					        {% endif %}
+			            {% endfor %}
+		            </tbody>
+	            </table>
+	            <div class="navigation">
+	                {{ knp_pagination_render(films) }}
+	            </div>
+			</div>
+			<!-- /invoice archive -->
+
+		</div>
+		<!-- /main content -->
+
+	</div>
+	<!-- /page content -->
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('assets/Back/global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('assets/Back/js/app.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/demo_pages/invoice_archive.js')}}"></script>
+{% endblock %}

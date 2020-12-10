@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+<!-- Page content -->
+	<div class="page-content">
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Invoice archive -->
+			<div class="panel panel-white block_table_data">
+				<div class="panel-heading">
+					<h6 class="panel-title">Seasons archive</h6>
+					<div class="heading-elements">
+						<ul class="icons-list">
+	                		<li><a data-action="collapse"></a></li>
+	                		<li><a data-action="reload"></a></li>
+	                		<li><a data-action="close"></a></li>
+	                	</ul>
+                	</div>
+				</div>
+
+				<table class="table table-lg">
+					<thead  class="thead_custom">
+						<tr>
+							<th>#</th>
+							<th>Title</th>
+			                <th>Nom</th>
+			                <th class="text-center">Episodes</th>
+			            </tr>
+					</thead>
+					<tbody>
+						{% for season in seasons %}
+							<tr  class="data_row">
+								<td  class="id_row">#{{season.id}}</td>
+								<td>{{season.title}}</td>
+				                <td>
+				                	{{season.title}}</a>
+			                	</td>
+								<td class="text-center">
+									<a href="{{path('season_eps', { id: season.id })}}" class="btn_options"><i class="fal fa-camera-movie"></i></a>
+								</td>
+				            </tr>
+			            {% endfor %}
+
+		            </tbody>
+	            </table>
+			</div>
+			<!-- /invoice archive -->
+
+		</div>
+		<!-- /main content -->
+
+	</div>
+	<!-- /page content -->
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('assets/Back/global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('assets/Back/js/app.js')}}"></script>
+	<script src="{{asset('assets/Back/global_assets/js/demo_pages/invoice_archive.js')}}"></script>
+{% endblock %}

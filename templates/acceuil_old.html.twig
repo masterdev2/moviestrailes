@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MoviesTrailers Movie Streaming API - movie stream by IMDB/TMDB ID</title>
+    <link href="{{asset('assets/Front/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:200,400|Muli" rel="stylesheet">
+    <link href="{{asset('assets/Front/css/new-age.min.css')}}" rel="stylesheet">
+</head>
+
+<body id="page-top" class="preload">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">MoviesTrailers</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#">Dooplay integration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{{path('user_login')}}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{{path('user_register')}}">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="masthead">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-7 my-auto">
+                    <div class="header-content mx-auto">
+                        <h1 class="mb-5">MoviesTrailers API</h1>
+                        <h2>Get movie stream by IMDB or TMDb ID</h2>
+                        <br />
+                        <h3>MoviesTrailers crawls various websites and search engines to find movie and TV episode streaming links which are then stored into our database and served to you through our API service.</h3>
+                        <br />
+                        <h4>Sign up and get your API key with unlimited requests.</h4>
+                        <br />
+                        <a href="{{path('user_register')}}" class="btn btn-outline btn-xl js-scroll-trigger mt-1">Sign up for free</a> &nbsp; or &nbsp;
+                        <a href="{{path('user_login')}}" class="btn btn-outline btn-xl js-scroll-trigger mt-1">Log in</a>
+                    </div>
+                </div>
+                <div class="col-lg-5 my-auto">
+                    <div class="device-container">
+                        <div class="text-ids">
+                            <div id="text1">tt3393786</div>
+                            <div id="text2">tt6532186</div>
+                            <div id="text3">tt0391404</div>
+                            <div id="text4">tt0260671</div>
+                            <div id="text5">tt2631580</div>
+                        </div>
+                        <div class="player-container">
+                            <div class="player">
+                                <div class="item-arrow"></div>
+                                <div class="item-player"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="announcement text-center" id="announcement">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 mx-auto">
+                    <h2>All-new interface</h2>
+                    <br /> We just released new interface for server selection. It is now faster, responsive, with less ads. We also updated our search script that will return much more accurate results and also will find episodes that are not in TMDB database but already aired in TV. All sources are now ordered by a scoring system based on relevance and quality. You can select from up to 10 servers.
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="download bg-primary text-center" id="download">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 mx-auto">
+                    <h2 class="section-heading mb-4">The infinite web of movies and episodes</h2>
+                    <p>MoviesTrailers is a bot constantly crawling through many websites and search engines looking for streaming links. These links are then stored into our database and linked to a unique identifier - IMDB or TMDb ID. Currently our database has more than <b>152900</b> movie links and <b>202000</b> episode links and is growing everyday.</p>
+                    <p><b>No dead links, no removed videos!</b>
+                        <br />If broken or removed links are found, MoviesTrailers immediately searches for new links.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <p>&copy; 2019 MoviesTrailers - All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script src="{{asset('assets/Front/js/jquery-3.1.1.min.js')}}"></script>
+    <script src="{{asset('assets/Front/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('assets/Front/js/jquery.charminator.min.js')}}"></script>
+    <script src="{{asset('assets/Front/js/new-age.js')}}"></script>
+</body>
+
+</html>

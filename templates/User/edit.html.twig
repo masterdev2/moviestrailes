@@ -1,0 +1,71 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Movies - Acceuil{% endblock %}
+{% block body %}
+	<div class="container">
+		<form method="post" class="block_form_movie">
+			<fieldset class="content-group">
+				<legend class="text-bold">Nouveau utilisateurs</legend>
+
+				<div class="form-group  row">
+					<label class="control-label col-lg-2 title_input">Nom</label>
+					<div class="col-lg-10">
+						<input type="text" required class="form-control form_input_movie" value="{{user.name}}" name="name">
+					</div>
+				</div>
+
+				<div class="form-group  row">
+					<label class="control-label col-lg-2 title_input">Prénom</label>
+					<div class="col-lg-10">
+						<input type="text" required class="form-control form_input_movie" value="{{user.lastName}}" name="lastName">
+					</div>
+				</div>
+
+				<div class="form-group  row">
+					<label class="control-label col-lg-2 title_input">UserName</label>
+					<div class="col-lg-10">
+						<input type="text" required class="form-control form_input_movie" value="{{user.username}}" name="userName">
+					</div>
+				</div>
+
+				<div class="form-group  row">
+					<label class="control-label col-lg-2 title_input">Mot de passe</label>
+					<div class="col-lg-10">
+						<input type="password" class="form-control form_input_movie" name="pass">
+					</div>
+				</div>
+
+				<div class="form-group  row">
+					<label class="control-label col-lg-2 title_input">Site Web</label>
+					<div class="col-lg-10">
+						<input type="text" required class="form-control form_input_movie" value="{{user.webSite}}" name="webSite">
+					</div>
+				</div>
+
+				<div class="form-group  row">
+					<label class="control-label col-lg-2 title_input">Email</label>
+					<div class="col-lg-10">
+						<input type="email" required class="form-control form_input_movie" value="{{user.email}}" name="email">
+					</div>
+				</div>
+
+	            <div class="form-group  row">
+	            	<label class="control-label col-lg-2 title_input">Role</label>
+	            	<div class="col-lg-10">
+	                    <select required name="role" class="form-control">
+	                        <option {% if user.hasRole('ROLE_ADMIN') %}selected{% endif %} value="1">Manager</option>
+	                        <option {% if user.hasRole('ROLE_CLIENT') %}selected{% endif %} value="2">User</option>
+	                    </select>
+	                </div>
+	            </div>
+
+				<div class="form-group row">
+					<div class="col-sm-12 text-center">
+						<input type="submit" value="enregistrer" class="btn btn-default submit_btn" >
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+
+{% endblock %}
